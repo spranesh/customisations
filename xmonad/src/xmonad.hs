@@ -53,7 +53,7 @@ workspaceNames = ["$>", "code", "ff", "chat", "music", "doc", "fb", "etc"]
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "gnome-terminal"
+myTerminal      = "lxterminal"
 
 --
 -- Width of the window border in pixels.
