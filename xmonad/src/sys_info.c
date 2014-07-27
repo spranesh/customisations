@@ -13,9 +13,14 @@
 
 #define COLOR(x) " ^fg(" x ") "
 
+#define BATTERY_TEMP_FILE "/tmp/spranesh-xmonad-battery-status"
+
 const size_t  Kmax_time_length = 200;
 const size_t  Kmax_line_length = 256;
 const char Kmeminfo_file[] = "/proc/meminfo";
+
+const battery_medium = 70;
+const battery_low = 20;
 
 /* The first four lines of the mem_info file looks like
 MemTotal:        2051808 kB
@@ -65,6 +70,26 @@ long int GetMemoryUsage()
   return mem_used >> 10;
 }
 
+double GetBatteryPercentage()
+{
+  const char command[] = "upower -i /org/freedesktop/UPower/devices/battery_BAT1 | \\grep percentage > " BATTERY_TEMP_FILE;
+  char buffer[Kmax_line_length];
+  FILE *fp;
+  long start_of_number;
+  double result;
+
+  system( command );
+
+  fp = fopen( BATTERY_TEMP_FILE, "r" );
+
+  fgets(buffer, Kmax_line_length, fp);
+
+  for(start_of_number=0; !isdigit(buffer[start_of_number]); start_of_number++);
+  result = atof(buffer+start_of_number);
+  // printf("%s || %ld \n", buffer+start_of_number, result);
+  return result;
+}
+
 int GetCPULoadAverage()
 {
   double load_average[3];
@@ -97,11 +122,13 @@ void GetTime(char * time_string)
 }
 
 
+
 int main(int argc, char *argv[])
 {
   long int mem_used = 0;
   int cpu_usage = 0;
   int refresh_rate = 6;
+  double battery_percentage = 0;
   char time[Kmax_time_length];
 
   if(argc == 1) {
@@ -112,11 +139,20 @@ int main(int argc, char *argv[])
   {
     mem_used = GetMemoryUsage();
     cpu_usage = GetCPULoadAverage();
+    battery_percentage = GetBatteryPercentage();
     GetTime(time);
 
     printf(COLOR("#0E93FF") "%2d%%", cpu_usage);
     printf(COLOR("#84EF96") "%4ldM ", mem_used);
     printf(COLOR("#FF8E1D") ":-) ");
+
+    if( battery_percentage > battery_medium )
+    	printf(COLOR("#DDDDDD") "%2.0f%%", battery_percentage );
+    else if( battery_percentage > battery_low )
+    	printf(COLOR("#777777") "%2.0f%%", battery_percentage );
+    else
+    	printf(COLOR("#DD0000") "%2.0f%%", battery_percentage );
+
     printf(COLOR("#B6E9EF") "%s  \n", time);
     fflush(stdout);
     usleep(refresh_rate * 100000);
