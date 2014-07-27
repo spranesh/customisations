@@ -7,7 +7,7 @@
 --
 -- Normally, you'd only override those defaults you care about.
 --
-import Char (isUpper)
+import Data.Char (isUpper)
 
 import XMonad hiding ((|||))
 import System.Exit
@@ -335,7 +335,7 @@ defaults = do
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-        numlockMask        = myNumlockMask,
+      -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
@@ -371,7 +371,7 @@ myFont = "-bitstream-charter-*-r-*-*-*-100-*-*-*-*-*-*"
 -- Theme 1
 
 processLayoutName :: Int -> String -> String
-processLayoutName n s = take n (filter (Char.isUpper) s ++ repeat '-')
+processLayoutName n s = take n (filter (Data.Char.isUpper) s ++ repeat '-')
 
 deiflPP = defaultPP { ppCurrent = wrap "^bg(#000)^fg(#a8a8ff) " " ^fg(#fedb73)^bg(#333)" 
                     , ppSep     = ""
