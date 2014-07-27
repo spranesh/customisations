@@ -66,21 +66,6 @@ myBorderWidth   = 1
 -- mod4Mask - Windows Key (usually!)
 myModMask       = mod4Mask
 
--- The mask for the numlock key. Numlock status is "masked" from the
--- current modifier status, so the keybindings will work with numlock on or
--- off. You may need to change this on some systems.
---
--- You can find the numlock modifier by running "xmodmap" and looking for a
--- modifier with Num_Lock bound to it:
---
--- > $ xmodmap | grep Num
--- > mod2        Num_Lock (0x4d)
---
--- Set numlockMask = 0 if you don't have a numlock key, or want to treat
--- numlock status separately.
---
-myNumlockMask   = mod2Mask
-
 myWorkspaces    = znames ++ map show [len+1..9] 
           where
           names = workspaceNames
@@ -115,7 +100,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ -- Default Keybindings
     -- launch a terminal
       ((modMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-    , ((modMask .|. controlMask, xK_Return), spawn "gnome-terminal")
+    , ((modMask .|. controlMask, xK_Return), spawn "xterm")
     -- launch dmenu
     , ((modMask,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     -- launch gmrun
@@ -153,11 +138,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask , xK_a),  sendMessage MirrorShrink)
     , ((modMask , xK_z),  sendMessage MirrorExpand)
     -- toggle the dzen bar gap after removing the other struts with Win + b
-    -- , ((modMask .|. shiftMask  , xK_b     ),
-    --       modifyGap (\i n -> let x = (XMonad.defaultGaps conf ++ repeat (0,0,0,0)) !! i
-    --                          in if n == x then (0,0,0,0) else x))
+    , ((modMask .|. controlMask  , xK_b ), modifyGap (
+		\i n -> let x = (XMonad.defaultGaps conf ++ repeat (0,0,0,0)) !! i in if n == x then (0,0,0,0) else x))
     , ((modMask .|. shiftMask, xK_q     ), spawn "gnome-session-save --gui --kill")
-
     -- Restart xmonad
     , ((modMask .|. controlMask, xK_q     ), restart "xmonad" True)
     ]
@@ -197,9 +180,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     [ -- My Keybindings
       -- Take Screenshot
-      ((0, xK_Print), spawn "gnome-screenshot -d 3"  )
+      ((0, xK_Print), spawn "scrot -s -e mkdir -p ~/screenshots; mv $f ~/screenshots" )
     -- lock screen
-    , ((mod1Mask .|. controlMask, xK_l), spawn "gnome-screensaver-command --lock")
+    -- , ((mod1Mask .|. controlMask, xK_l), spawn "gnome-screensaver-command --lock")
     -- , ((modMask, xK_s), spawn "xterm -e screen -R")
     
     -- Win + shift Key Bindings -> extra functionality
@@ -215,9 +198,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- Win + Contorl Bindings
     -- Used to run things
-    , ((modMask  .|. controlMask, xK_k), spawn "rhythmbox")
-    , ((modMask  .|. controlMask, xK_m), spawn "mousepad")
-    , ((modMask  .|. controlMask, xK_h), spawn "thunar")
+    , ((modMask  .|. controlMask, xK_k), spawn "audacious")
+    , ((modMask  .|. controlMask, xK_m), spawn "leafpad")
+    , ((modMask  .|. controlMask, xK_h), spawn "pcmanfm")
     , ((modMask  .|. controlMask, xK_x), shellPrompt defaultXPConfig)
     -- , ((modMask  .|. controlMask, xK_n), namedScratchpadAction myScratchPads "notes")
     -- , ((modMask  .|. controlMask, xK_t), namedScratchpadAction myScratchPads "quickcommand")
@@ -312,20 +295,16 @@ myFocusFollowsMouse = False
 -- use the defaults defined in xmonad/XMonad/Config.hs
 -- 
 main = do 
-        default_programs
+        -- default_programs
         d <- defaults
         xmonad d
 
 
-default_programs = do
-             -- spawn "xsetroot white"
-             spawn "gnome-terminal -e 'screen -R' "
-             spawn "yakuake"
-             spawn "unclutter -idle 5"
+-- default_programs = do
+--              spawn "gnome-terminal -e 'screen -R' "
+--              spawn "yakuake"
 
 defaults = do
-    -- dzenProc <- spawnPipe dzenCommand
-
     wsdzn <- spawnPipe wsBar
     miscbar <- spawnPipe miscBar
 
@@ -335,7 +314,6 @@ defaults = do
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-      -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
@@ -357,12 +335,10 @@ miscBar = miscBarProcess ++  " | dzen2 -x '700' -ta 'r' " ++ dzenFont
 wsBar = "dzen2 -ta 'l' -w '700'" ++ dzenFont
 
 
--- use xfontsel
--- dzenFont = ""
-dzenFont = " -fn ' " ++ myFont ++ " ' "
+-- dzenFont = " -fn ' " ++ myFont ++ " ' "
+dzenFont = ""
 --myFont = "-adobe-palatino-bold-r-*-*-*-*-*-*-*-*-*-*"
-myFont = "-bitstream-charter-*-r-*-*-*-100-*-*-*-*-*-*"
--- Other Fonts
+-- myFont = "-bitstream-charter-*-r-*-*-*-100-*-*-*-*-*-*"
 -- myFont = "-adobe-palatino-bold-r-*-*-*-*-*-*-*-*-*-*"
 -- myFont = "xft:Sans:size=9:weight=regular:hinting=true:hintstyle=hintslight:antialias=true:rgba=rgb:lcdfilter=lcdligh"
 -- myFont = "-*-avantgarde-demi-r-*-*-*-*-*-*-*-*-*"
@@ -382,15 +358,3 @@ deiflPP = defaultPP { ppCurrent = wrap "^bg(#000)^fg(#a8a8ff) " " ^fg(#fedb73)^b
                     , ppTitle   = pad . dzenColor "#dddddd" "" . wrap "< " " >" . shorten 30
                     , ppOrder   = \(ws:layout:title:rest) -> [layout, ws, title] ++ rest
                     }
-
------------------------------------------------------------------------
--- Theme 2
-{--
-robPP = defaultPP 
-                 { ppCurrent = wrap "^fg(#000000)^bg(#a6c292)^p(2)^i(/home/robert/dzen_bitmaps/has_win.xbm)" "^p(2)^fg()^bg()"
-                  , ppVisible = wrap "^bg(grey30)^fg(grey75)^p(2)" "^p(2)^fg()^bg()"
-                  , ppSep     = " ^fg(grey60)^r(3x3)^fg() "
-                  , ppLayout  = (\_ -> "")
-                  , ppTitle   = dzenColor "white" "" . wrap "< " " >" 
-                  }
---}
