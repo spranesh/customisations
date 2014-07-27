@@ -151,6 +151,8 @@ hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{g}[%{B}%n*%f%t%?(%u
 
 #screen -t gelatin 8
 #screen -t tunnel 9
-screen -t wicd-curses 0
+shell zsh
+
+screen -t wicd-curses 0 wicd-curses
 screen -t zsh 1
 screen -t zsh 2

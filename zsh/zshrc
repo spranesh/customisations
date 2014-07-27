@@ -178,14 +178,5 @@ zstyle ':completion:*:ssh:*' group-order \
    hosts-domain hosts-host users hosts-ipaddr
 zstyle '*' single-ignored show
 
-PATH=/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/share/RealPlayer:~/.local/bin
-
-cat ~/URGENT
-
-# export http_proxy="http://localhost:12345"
-# export ftp_proxy=""
-# export no_proxy="10.94.*.*"
-
-export PYTHONPATH="/home/spranesh/redhawk/"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+PATH_ADDITIONS=${HOME}/bin
+PATH=${PATH}:${PATH_ADDITIONS}
