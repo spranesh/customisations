@@ -13,7 +13,8 @@
 
 #define COLOR(x) " ^fg(" x ") "
 
-#define BATTERY_TEMP_FILE "/tmp/spranesh-xmonad-battery-status"
+#define BATTERY_PATH "/sys/class/power_supply/"
+#define BATTERY_NUMBER "BAT1"
 
 const size_t  Kmax_time_length = 200;
 const size_t  Kmax_line_length = 256;
@@ -48,6 +49,16 @@ long int GetNextMemoryStatistic(FILE* fp)
   return GetFirstNumberFromLine(buffer);
 }
 
+long int ReadFirstNumberFromFile( const char filename[] )
+{
+  FILE *fp;
+  char buffer[Kmax_line_length];
+  fp = fopen( filename, "r" );
+  fgets(buffer, Kmax_line_length, fp);
+  fclose( fp );
+  return GetFirstNumberFromLine( buffer );
+};
+
 long int GetMemoryUsage()
 {
   long int mem_total, mem_free, mem_buffers, mem_cached;
@@ -72,22 +83,9 @@ long int GetMemoryUsage()
 
 double GetBatteryPercentage()
 {
-  const char command[] = "upower -i /org/freedesktop/UPower/devices/battery_BAT1 | \\grep percentage > " BATTERY_TEMP_FILE;
-  char buffer[Kmax_line_length];
-  FILE *fp;
-  long start_of_number;
-  double result;
-
-  system( command );
-
-  fp = fopen( BATTERY_TEMP_FILE, "r" );
-
-  fgets(buffer, Kmax_line_length, fp);
-
-  for(start_of_number=0; !isdigit(buffer[start_of_number]); start_of_number++);
-  result = atof(buffer+start_of_number);
-  // printf("%s || %ld \n", buffer+start_of_number, result);
-  return result;
+  long int full_charge = ReadFirstNumberFromFile( BATTERY_PATH BATTERY_NUMBER "/charge_full" );
+  long int now_charge  = ReadFirstNumberFromFile( BATTERY_PATH BATTERY_NUMBER "/charge_now" );
+  return (double) (now_charge) * 100 / (double) full_charge;
 }
 
 int GetCPULoadAverage()
@@ -149,7 +147,7 @@ int main(int argc, char *argv[])
     if( battery_percentage > battery_medium )
     	printf(COLOR("#DDDDDD") "%2.0f%%", battery_percentage );
     else if( battery_percentage > battery_low )
-    	printf(COLOR("#777777") "%2.0f%%", battery_percentage );
+    	printf(COLOR("#888888") "%2.0f%%", battery_percentage );
     else
     	printf(COLOR("#DD0000") "%2.0f%%", battery_percentage );
 
