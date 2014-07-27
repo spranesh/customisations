@@ -9,8 +9,6 @@ sys_info: src/sys_info.c
 
 setup_links:
 	ln -f -sT src/xmonad.hs xmonad.hs
-	ln -f -sT src/bar_status.py bar_status.py
-
 
 xmonad_recompile:
 	xmonad --recompile
