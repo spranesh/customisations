@@ -138,9 +138,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask , xK_a),  sendMessage MirrorShrink)
     , ((modMask , xK_z),  sendMessage MirrorExpand)
     -- toggle the dzen bar gap after removing the other struts with Win + b
-    , ((modMask .|. controlMask  , xK_b ), modifyGap (
-		\i n -> let x = (XMonad.defaultGaps conf ++ repeat (0,0,0,0)) !! i in if n == x then (0,0,0,0) else x))
-    , ((modMask .|. shiftMask, xK_q     ), spawn "gnome-session-save --gui --kill")
+    -- , ((modMask .|. controlMask  , xK_b ), modifyGap (
+		-- \i n -> let x = (myDefaultGaps ++ repeat (0,0,0,0)) !! i in if n == x then (0,0,0,0) else x))
+    -- , ((modMask .|. shiftMask, xK_q     ), spawn "gnome-session-save --gui --kill")
     -- Restart xmonad
     , ((modMask .|. controlMask, xK_q     ), restart "xmonad" True)
     ]
@@ -317,7 +317,6 @@ defaults = do
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
-        -- defaultGaps        = myDefaultGaps,
 
       -- key bindings
         keys               = myKeys,
