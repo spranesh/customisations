@@ -67,14 +67,14 @@ long int GetMemoryUsage()
 
 int GetCPULoadAverage()
 {
-  double load_average;
+  double load_average[3];
   int result;
 
-  getloadavg(&load_average, 3);
+  getloadavg(load_average, 3);
 #if DUAL_CORE_PROCESSOR == 1
-  load_average /= 2;
+  load_average[0] /= 2;
 #endif
-  result = (int)(load_average * 100);
+  result = (int)(load_average[0] * 100);
   return result;
 }
 
