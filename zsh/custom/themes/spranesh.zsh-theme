@@ -16,7 +16,7 @@ local host="%{$fg_bold[green]%}$(hostname)%{$reset_color%}"
 # Compacted $PWD
 local pwd="%{$fg_bold[red]%}%c%{$reset_color%}"
 
-PROMPT='[${time} ${user}${at}${host}:${pwd} $(git_prompt_info)]%{$reset_color%}'
+PROMPT='[${time} ${user}${at}${host}:${pwd} $(git_prompt_info)]%{$reset_color%} '
 
 # i would prefer 1 icon that shows the "most drastic" deviation from HEAD,
 # but lets see how this works out
