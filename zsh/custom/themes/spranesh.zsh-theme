@@ -26,7 +26,7 @@ ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[green]%}%{$fg[yellow]%}*%{$fg[green]%}%{$reset
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}"
 
 # elaborate exitcode on the right when >0
-return_code_enabled="%{$fg_bold[white]%}[%(?..%{$fg_bold[red]%}%?%{$reset_color%})]%{$reset_color%}"
+return_code_enabled="%{$fg_bold[white]%}[%(?..%{$fg_bold[red]%}%?%{$fg_bold[white]%})]%{$reset_color%}"
 return_code_disabled=""
 return_code=$return_code_enabled
 
