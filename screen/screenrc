@@ -128,29 +128,16 @@ register [ "\033:se noai\015a"
 register ] "\033:se ai\015a"
 bind ^] paste [.]
 
+
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{g}[%{B}%n*%f%t%?(%u)%?%{g}]%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
 ################
 #
 # default windows
 #
 
-# screen -t local 0
-# screen -t mail 1 mutt
-# screen -t 40 2 rlogin server
 
-hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{g}[%{B}%n*%f%t%?(%u)%?%{g}]%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
-
-# bind = resize =
-# bind + resize +1
-# bind - resize -1
-# bind _ resize max
-#
-# defnonblock 1
-# blankerprg rain -d 100
-# idle 30 blanker
-
-#screen -t gelatin 8
-#screen -t tunnel 9
 shell zsh
 
 screen -t wicd-curses 0 wicd-curses

@@ -58,6 +58,6 @@ windowRules = composeAll
 -- Scratchpads
 ------------------------------------------------------------------------
 myScratchPads = [ 
-    NS "notes" ("leafpad ~/notes.txt") (className =? "leafpad") defaultFloating 
+    NS "notes" ("leafpad ~/notes/notes.txt") (className =? "leafpad") defaultFloating 
     ] where role = stringProperty "WM_WINDOW_ROLE"
 
