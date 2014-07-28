@@ -2,3 +2,4 @@ sys_info
 xmonad-i386-linux
 *.o
 xmonad/history
+*.swp
