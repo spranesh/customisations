@@ -30,6 +30,8 @@ keyBindings modMask = ( customKeyBindings modMask ++ layoutKeyBindings modMask )
 customKeyBindings modMask = [ -- My Keybindings
     -- Take Screenshot
     ((0, xK_Print), spawn "scrot -s -e mkdir -p ~/screenshots; mv $f ~/screenshots" )
+    -- avoid struts with win + b
+    ,((modMask, xK_b     ), sendMessage ToggleStruts)
     -- lock screen
     , ((mod1Mask .|. controlMask, xK_l), spawn "gnome-screensaver-command --lock")
 
