@@ -12,3 +12,7 @@ Requirements
 	* By default it is configured to launch the lubuntu default apps -
 		lxterminal, audacious, leafpad etc.. This can be configured by editing the
     keybinding fie.
+
+You can see a simple screenshot of the xmonad setup and the zsh
+themes and completion abilities
+[here](https://raw.githubusercontent.com/spranesh/customisations/master/screenshot.png).
