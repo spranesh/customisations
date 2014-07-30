@@ -81,6 +81,7 @@ myConfig topLeftHandle = additionalKeys d $ K.keyBindings C.modMask
 
 
 main = do
+    spawnPipe C.startupCommand
     spawnPipe topRightBar
     wsDzen <- spawnPipe topLeftWSBar
     xmonad $ myConfig wsDzen

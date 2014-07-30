@@ -1,5 +1,6 @@
 module Config ( modMask
               , home
+              , startupCommand
               , topRightBarProcess
               , workspaceNames
               , windowRules
@@ -33,6 +34,8 @@ terminal           = "lxterminal"
 focusFollowsMouse  = False
 normalBorderColor  = "#dddddd" -- A light gray
 focusedBorderColor = "#4cb7ff" -- A lightish blue
+
+startupCommand     = "bash ~/.xmonad-startup.sh"
 
 ------------------------------------------------------------------------
 -- Window Rules:
