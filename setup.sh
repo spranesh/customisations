@@ -1,6 +1,10 @@
 #!/bin/bash
-pwd=$((pwd))
-ln -sT $pwd/zsh/zshrc ~/.zshrc
-ln -sT $pwd/rc/screenrc ~/.screenrc
-ln -sT $pwd/rc/vimperatorrc ~/.vimperatorrc
-ln -sT $pwd/xmonad ~/.xmonad
+wd=$(pwd)
+echo "Working directory is" $wd "."
+echo "Creating symlinks if they do not already exist."
+echo
+
+ln -vsT $wd/zsh/zshrc ~/.zshrc
+ln -vsT $wd/rc/screenrc ~/.screenrc
+ln -vsT $wd/rc/vimperatorrc ~/.vimperatorrc
+ln -vsT $wd/xmonad ~/.xmonad
